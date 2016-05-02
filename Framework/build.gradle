@@ -1,0 +1,28 @@
+apply plugin: 'java'
+
+repositories {
+    maven {
+        url 'http://nexus.gogoair.com/nexus/content/groups/public'
+    }
+    mavenCentral()
+}
+
+jar {
+    from {
+        configurations.compile.collect{
+            it.isDirectory() ? it : zipTree(it);
+        }
+    }
+}
+
+dependencies {
+    compile files('lib/acpuclient-6.5.0.jar')
+
+    compile 'log4j:log4j:1.2.17'
+    compile 'javax.jms:jms:1.1'
+    compile 'javax.jms:javax.jms-api:2.0'
+
+
+    runtime  files('lib/hornetq-commons.jar', 'lib/hornetq-core-client.jar', 'lib/hornetq-jms-client.jar', 'lib/jnp-client.jar', 'lib/netty.jar')
+  //  testCompile group: 'junit', name: 'junit', version: '4.11'
+}

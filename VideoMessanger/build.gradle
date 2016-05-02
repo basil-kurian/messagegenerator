@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+dependencies {
+    compile project (':ServiceMessenger')
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.aircell.abs.acpu.videoservice.TestVideoMessenger'
+    }
+    from {
+        configurations.compile.collect{
+            it.isDirectory() ? it : zipTree(it);
+        }
+    }
+}
